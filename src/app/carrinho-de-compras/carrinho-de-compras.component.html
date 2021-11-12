@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-body">
+
+    <h5 class="card-title">Meu Carrinho de Compras</h5>
+    <p class="card-text">Relação de produtos selecionados para compra.</p>
+    <hr />
+
+    <div *ngIf="dados.quantidadeItens == 0" class="alert alert-warning mt-3">
+      <strong>O seu carrinho de compras está vazio!</strong>
+      &nbsp;<a [routerLink]="['/']">Clique aqui</a> para adicionar produtos.
+    </div>
+
+    <div *ngIf="dados.quantidadeItens > 0" class="row">
+      <div class="col-md-6">
+        <h4>Total do Carrinho: {{dados.valorTotal | currency : 'R$ '}}</h4>
+      </div>
+      <div class="col-md-6 text-end">
+        <button class="btn btn-outline-danger" (click)="limparCarrinho()">
+          Limpar Carrinho
+        </button>
+        &nbsp;
+        <a [routerLink]="['/login-clientes']" class="btn btn-success">
+          Finalizar Pedido
+        </a>
+      </div>
+    </div>
+
+    <table *ngIf="dados.quantidadeItens > 0" class="table mt-4">
+      <thead>
+        <tr>
+          <th>Foto</th>
+          <th>Nome do Produto</th>
+          <th>Preço</th>
+          <th>Quantidade</th>
+          <th>Total</th>
+          <th>Descrição</th>
+          <th width="100">Operações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of dados.itens">
+          <td>
+            <img src="{{item.foto}}" height="50" />
+          </td>
+          <td>{{item.nome}}</td>
+          <td width="120">{{item.preco | currency : 'R$ '}}</td>
+          <td>{{item.quantidade}}</td>
+          <td width="120">{{item.total | currency : 'R$ '}}</td>
+          <td>{{item.descricao}}</td>
+          <td>
+            <button class="btn btn-outline-primary">+</button>
+            &nbsp;
+            <button class="btn btn-outline-danger">-</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="7">
+            Quantidade de itens: {{dados.quantidadeItens}}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="row mt-4">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="https://www.cotiinformatica.com.br/imagens/logo-coti-informatica.png" class="img-fluid" />
+                    <h5 class="mt-2">Acessar conta de cliente</h5>
+                </div>
+
+                <hr />
+
+                <div *ngIf="mensagem_erro" class="alert alert-danger">
+                    <strong>{{mensagem_erro}}</strong>
+                </div>
+
+                <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+
+                    <label>Email de acesso:</label>
+                    <input type="email" class="form-control" placeholder="Digite aqui" formControlName="email" />
+                    <div class="text-danger" *ngIf="form.email.touched && form.email.invalid">
+                        <div *ngIf="form.email.errors.required">
+                            Por favor, informe o seu email de acesso.
+                        </div>
+                    </div>
+                    <br />
+
+                    <label>Senha de acesso:</label>
+                    <input type="password" class="form-control" placeholder="Digite aqui" formControlName="senha">
+                    <div class="text-danger" *ngIf="form.senha.touched && form.senha.invalid">
+                        <div *ngIf="form.senha.errors.required">
+                            Por favor, informe a sua senha de acesso.
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="d-grid">
+                        <input type="submit" value="Acessar Conta" class="btn btn-dark" [disabled]="!formLogin.valid" />
+                    </div>
+
+                    <div class="d-grid mt-2">
+                        <a [routerLink]="['/cadastro-clientes']" class="btn btn-primary">
+                            Cadastrar Conta de Cliente
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

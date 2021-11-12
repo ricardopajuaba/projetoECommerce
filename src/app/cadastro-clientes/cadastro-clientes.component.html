@@ -1,0 +1,195 @@
+<div class="card">
+    <div class="card-body">
+
+        <h5 class="card-title">Criar conta de cliente</h5>
+        <p class="card-text">Preencha os campos abaixo para criar sua conta.</p>
+        <hr />
+
+        <div *ngIf="mensagem_sucesso" class="alert alert-success">
+            <strong>{{mensagem_sucesso}}</strong>
+        </div>
+
+        <div *ngIf="mensagem_erro" class="alert alert-danger">
+            <strong>{{mensagem_erro}}</strong>
+        </div>
+
+        <form [formGroup]="formCadastro" (ngSubmit)="onSubmit()">
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>Nome do Cliente:</label>
+                    <input type="text" class="form-control" formControlName="nome" />
+
+                    <div class="text-danger" *ngIf="form.nome.touched && form.nome.invalid">
+                        <div *ngIf="form.nome.errors.required">
+                            Por favor, informe o seu nome.
+                        </div>
+                        <div *ngIf="form.nome.errors.minlength">
+                            Por favor, informe no mínimo 10 caracteres.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <label>CPF:</label>
+                    <input type="text" class="form-control" formControlName="cpf" mask="000.000.000-00" />
+
+                    <div class="text-danger" *ngIf="form.cpf.touched && form.cpf.invalid">
+                        <div *ngIf="form.cpf.errors.required">
+                            Por favor, informe o seu cpf.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <label>Telefone (Celular):</label>
+                    <input type="text" class="form-control" formControlName="telefone" mask="(00) 00000-0000" />
+
+                    <div class="text-danger" *ngIf="form.telefone.touched && form.telefone.invalid">
+                        <div *ngIf="form.telefone.errors.required">
+                            Por favor, informe o seu telefone.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>Email de acesso:</label>
+                    <input type="text" class="form-control" formControlName="email" />
+
+                    <div class="text-danger" *ngIf="form.email.touched && form.email.invalid">
+                        <div *ngIf="form.email.errors.required">
+                            Por favor, informe o seu email.
+                        </div>
+                        <div *ngIf="form.email.errors.email">
+                            Por favor, informe um endereço de email válido.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <label>Senha de acesso:</label>
+                    <input type="password" class="form-control" formControlName="senha" />
+
+                    <div class="text-danger" *ngIf="form.senha.touched && form.senha.invalid">
+                        <div *ngIf="form.senha.errors.required">
+                            Por favor, informe a sua senha.
+                        </div>
+                        <div *ngIf="form.senha.errors.minlength">
+                            Por favor, informe no mínimo 8 caracteres.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <label>Confirme sua senha:</label>
+                    <input type="password" class="form-control" formControlName="senhaConfirmacao" />
+
+                    <div class="text-danger" *ngIf="form.senhaConfirmacao.touched && form.senhaConfirmacao.invalid">
+                        <div *ngIf="form.senhaConfirmacao.errors.required">
+                            Por favor, confirme a sua senha.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>Informe seu CEP:</label>
+                    <input type="text" class="form-control" formControlName="cep" mask="00000-000"
+                        (keyup)="obterEndereco()" />
+
+                    <div class="text-danger" *ngIf="form.cep.touched && form.cep.invalid">
+                        <div *ngIf="form.cep.errors.required">
+                            Por favor, informe o seu cep.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-7">
+                    <label>Logradouro:</label>
+                    <input type="text" class="form-control" formControlName="logradouro" readonly />
+
+                    <div class="text-danger" *ngIf="form.logradouro.touched && form.logradouro.invalid">
+                        <div *ngIf="form.logradouro.errors.required">
+                            Por favor, informe o seu logradouro.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    <label>Número:</label>
+                    <input type="text" class="form-control" formControlName="numero" />
+
+                    <div class="text-danger" *ngIf="form.numero.touched && form.numero.invalid">
+                        <div *ngIf="form.numero.errors.required">
+                            Por favor, informe o numero.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>Complemento:</label>
+                    <input type="text" class="form-control" formControlName="complemento" />
+
+                    <div class="text-danger" *ngIf="form.complemento.touched && form.complemento.invalid">
+                        <div *ngIf="form.complemento.errors.required">
+                            Por favor, informe o complemento.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <label>Bairro:</label>
+                    <input type="text" class="form-control" formControlName="bairro" readonly />
+
+                    <div class="text-danger" *ngIf="form.bairro.touched && form.bairro.invalid">
+                        <div *ngIf="form.bairro.errors.required">
+                            Por favor, informe o bairro.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <label>Cidade:</label>
+                    <input type="text" class="form-control" formControlName="cidade" readonly />
+
+                    <div class="text-danger" *ngIf="form.cidade.touched && form.cidade.invalid">
+                        <div *ngIf="form.cidade.errors.required">
+                            Por favor, informe a cidade.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <label>Estado:</label>
+                    <input type="text" class="form-control" formControlName="estado" readonly />
+
+                    <div class="text-danger" *ngIf="form.estado.touched && form.estado.invalid">
+                        <div *ngIf="form.estado.errors.required">
+                            Por favor, informe o estado.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-success" value="Realizar Cadastro"
+                        [disabled]="!formCadastro.valid" />
+                    &nbsp;
+                    <a [routerLink]="['/']" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

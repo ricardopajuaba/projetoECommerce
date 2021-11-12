@@ -1,0 +1,88 @@
+<div class="row mb-5">
+
+    <!-- filtro de busca -->
+    <div class="row mb-3">
+        <div class="col-md-4 offset-md-4 text-center">
+            <input type="text" class="form-control" placeholder="Pesquisar produtos"
+                [(ngModel)]="filtro"/>
+        </div>
+    </div>
+
+    <!-- régua de paginação -->
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <pagination-controls
+                (pageChange)="handlePageChange($event)"
+                previousLabel="Página anterior"
+                nextLabel="Próxima página">                
+            </pagination-controls>
+        </div>
+    </div>
+
+    <div class="col-md-3 mt-3" *ngFor="let item of produtos | filter : filtro | paginate : { itemsPerPage : 4 , currentPage : pagina}">
+
+        <div class="card">
+            <div class="card-body text-center">
+
+                <img src="{{item.foto}}" class="img-fluid"/>
+
+                <h4 class="mt-4">{{item.nome}}</h4>
+
+                <h5>Apenas: {{item.preco | currency: 'R$ '}}</h5>
+                
+                <div>{{item.quantidade}} unidade(s) em estoque.</div>
+
+                <div class="mt-3 d-grid">
+                    <button class="btn btn-success btn-sm" 
+                        data-bs-toggle="modal"
+                        data-bs-target="#dados_produto"
+                        (click)="selecionarProduto(item)">
+                        Adicionar ao carrinho
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- janela modal para exibir os dados do produto -->
+<div id="dados_produto" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Adicionar produto ao carrinho de compras</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <img src="{{produto.foto}}" class="img-fluid"/>
+                </div>
+                <div class="col-md-8 text-center">
+                    
+                    <h3>{{produto.nome}}</h3>
+                    <hr/>
+
+                    <p>
+                        {{produto.descricao}}
+                    </p>
+
+                    <h2>Apenas: {{produto.preco | currency : 'R$ '}}</h2>
+                    <h6>{{produto.quantidade}} unidade(s) em estoque.</h6>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+              (click)="adicionarAoCarrinho()">
+              Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

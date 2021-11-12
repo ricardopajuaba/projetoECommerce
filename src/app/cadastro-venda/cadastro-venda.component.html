@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-body">
+
+        <h5 class="card-title">Finalizar Compra</h5>
+        <p class="card-text">Confirme os dados para finalizar sua compra no site.</p>
+        <hr />
+
+        <div class="alert alert-success text-center" *ngIf="mensagem_sucesso">
+            <h1>Parabéns!</h1>
+            <h3>{{mensagem_sucesso}}</h3>
+        </div>
+
+        <div *ngIf="dados_carrinho.quantidadeItens == 0" class="alert alert-warning mt-3">
+            <strong>O seu carrinho de compras está vazio!</strong>
+            &nbsp;<a [routerLink]="['/']">Clique aqui</a> para adicionar produtos.
+        </div>
+
+        <div class="row" *ngIf="dados_carrinho.quantidadeItens > 0">
+            <div class="col-md-8">
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nome do Produto</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dados_carrinho.itens">
+                            <td>
+                                <img src="{{item.foto}}" height="50" />
+                            </td>
+                            <td>{{item.nome}}</td>
+                            <td width="120">{{item.preco | currency : 'R$ '}}</td>
+                            <td>{{item.quantidade}}</td>
+                            <td width="120">{{item.total | currency : 'R$ '}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                Quantidade de itens: {{dados_carrinho.quantidadeItens}}
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-md-4">
+
+                <table class="table table-bordered table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Cliente:</td>
+                            <td><strong>{{dados_cliente.nomeCliente}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td><strong>{{dados_cliente.emailCliente}}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center mt-4">
+
+                    <h4>Total da Compra: <br /><strong>{{dados_carrinho.valorTotal | currency : 'R$ '}}</strong></h4>
+
+                    <button (click)="finalizarCompra()" class="btn btn-success btn-lg mt-3">
+                        Finalizar Compra
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
